@@ -1,10 +1,10 @@
-package org.adaitw.tpfinal;
+package org.adaitw.apibot_coachjava;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TpFinalApplicationTests {
+class ApiBotCoachJavaApplicationTests {
 
     @Test
     void contextLoads() {

@@ -4,7 +4,7 @@
     <persistence-units>
       <persistence-unit name="Default">
         <packages>
-          <package value="org.adaitw.tpfinal" />
+          <package value="org.adaitw.apibot_coachjava" />
         </packages>
       </persistence-unit>
     </persistence-units>
