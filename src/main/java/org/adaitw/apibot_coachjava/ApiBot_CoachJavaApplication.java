@@ -1,4 +1,4 @@
-package org.adaitw.apibot_coachjava.service;
+package org.adaitw.apibot_coachjava;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
