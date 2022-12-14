@@ -32,8 +32,8 @@ public class ClienteController {
 
     /*Método que recibe una peticion y devuelve de la base de datos un cliente*/
     @GetMapping("/{clienteId}")
-    public ResponseEntity retrieveById(@PathVariable Integer clienteId) {
-        ClienteDTO clienteDTO = clienteService.retrieveById(clienteId);
+    public ResponseEntity retrieveById(@PathVariable String clienteId) {
+        ClienteDTO clienteDTO = clienteService.retrieveById(Integer.valueOf(clienteId));
 
         return new ResponseEntity(clienteDTO, HttpStatus.OK);
     }
@@ -56,7 +56,7 @@ public class ClienteController {
 
     @PatchMapping("/{clienteId}")
     public ResponseEntity modify(@PathVariable Integer clienteId,
-                                 @RequestBody Map<Integer, Object> fieldsToModify) {
+                                 @RequestBody Map<String, Object> fieldsToModify) {
         clienteService.modify(clienteId, fieldsToModify);
 
         return new ResponseEntity(HttpStatus.OK);

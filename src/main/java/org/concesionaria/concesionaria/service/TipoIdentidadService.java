@@ -41,7 +41,7 @@ public class TipoIdentidadService {
     /*mostrar un registro de tipo de identidad por id*/
     public TipoIdentidadDTO retrieveById(Integer tipoIdentidadId) {
         Optional<TipoIdentidad> tipoIdentidad = tipoIdentidadRepository.findById(tipoIdentidadId);
-        if (tipoIdentidad.isPresent()) {
+        if (!tipoIdentidad.isPresent()) {
             throw new ResourceNotFoundException();
         }
         return mapToDto(tipoIdentidad.get());
@@ -60,7 +60,7 @@ public class TipoIdentidadService {
     public void replace(Integer tipoIdentidadId, TipoIdentidadDTO tipoIdentidadDto) {
         Optional<TipoIdentidad> tipoIdentidad = tipoIdentidadRepository.findById(tipoIdentidadId);
 
-        if (tipoIdentidad.isPresent()) {
+        if (!tipoIdentidad.isPresent()) {
             throw new ResourceNotFoundException();
         }
         TipoIdentidad tipoIdentidadToReplace = tipoIdentidad.get();
@@ -71,7 +71,7 @@ public class TipoIdentidadService {
     public void modify(Integer TipoIdentidadId, Map<Integer, Object> fieldsToModify) {
         Optional<TipoIdentidad> tipoIdentidad = tipoIdentidadRepository.findById(Integer.valueOf(TipoIdentidadId));
 
-        if (tipoIdentidad.isPresent()) {
+        if (!tipoIdentidad.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
@@ -92,6 +92,7 @@ public class TipoIdentidadService {
 
     private TipoIdentidadDTO mapToDto(TipoIdentidad tipoIdentidad) {
         TipoIdentidadDTO tipoIdentidadDTO = new TipoIdentidadDTO(tipoIdentidad.getTipo());
+        tipoIdentidadDTO.setId(tipoIdentidad.getId());
         return tipoIdentidadDTO;
 
     }

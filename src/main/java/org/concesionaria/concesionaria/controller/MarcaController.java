@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path="/marcas")
+@RequestMapping(path="/marca")
 public class MarcaController {
 
     private final MarcaService marcaService;
@@ -20,10 +20,8 @@ public class MarcaController {
     }
 
     @PostMapping
-    public ResponseEntity create(@RequestHeader(value = "client-id") String clientId,
-                                 @RequestBody MarcaDTO marcaDTO){
+    public ResponseEntity create(@RequestBody MarcaDTO marcaDTO){
         MarcaDTO createMarcaDTO = marcaService.create(marcaDTO);
-
         return new ResponseEntity(marcaDTO.getId(), HttpStatus.CREATED);
     }
 
@@ -38,7 +36,7 @@ public class MarcaController {
 
         return new ResponseEntity(marcaDTO, HttpStatus.OK);
     }
-    @DeleteMapping("/{maracId}")
+    @DeleteMapping("/{marcaId}")
     public ResponseEntity delete(@PathVariable String marcaId){
         marcaService.delete(Integer.valueOf(marcaId));
         return new ResponseEntity(HttpStatus.OK);

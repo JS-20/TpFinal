@@ -43,7 +43,7 @@ public class MetodoPagoService {
     /*mostrar un metodo de pago por id*/
     public MetodoPagoDTO retrieveById(Integer metodoPagoId) {
         Optional<MetodoPago> metodoPago = metodoPagoRepository.findById(metodoPagoId);
-        if (metodoPago.isPresent()) {
+        if (!metodoPago.isPresent()) {
             throw new ResourceNotFoundException();
         }
         return mapToDTO(metodoPago.get());
@@ -60,7 +60,7 @@ public class MetodoPagoService {
 
     public void replace(Integer id, MetodoPagoDTO metodoPagoDTO) {
         Optional<MetodoPago> metodoPago = metodoPagoRepository.findById(Integer.valueOf(id));
-        if (metodoPago.isPresent()) {
+        if (!metodoPago.isPresent()) {
             throw new ResourceNotFoundException();
         }
         MetodoPago metodoPagoToReplace = metodoPago.get();
@@ -71,7 +71,7 @@ public class MetodoPagoService {
     public void modify(Integer id, Map<Integer, Object> fieldsToModify) {
         Optional<MetodoPago> metodoPago = metodoPagoRepository.findById(id);
 
-        if (metodoPago.isPresent()) {
+        if (!metodoPago.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
@@ -92,6 +92,7 @@ public class MetodoPagoService {
 
     private MetodoPagoDTO mapToDTO(MetodoPago metodoPago) {
         MetodoPagoDTO metodoPagoDTO = new MetodoPagoDTO(metodoPago.getTipo(), metodoPago.getDescripcion());
+        metodoPagoDTO.setId(metodoPago.getId());
         return metodoPagoDTO;
     }
 

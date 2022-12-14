@@ -29,10 +29,11 @@ public class MarcaService {
     //crear una marca/
     public MarcaDTO create(MarcaDTO marcaDTO) {
         Marca marca = mapToEntity(marcaDTO);
-        CheckForExistingMarca(marca.getId());
+        //checkForExistingMarca(marca.getId());
         marca = marcaRepository.save(marca);
         return marcaDTO;
     }
+
 
     //mostrar todos las marcas creadas/
     public List<MarcaDTO> retrieveAll(){
@@ -44,7 +45,7 @@ public class MarcaService {
     //mostrar una marca por id/
     public MarcaDTO retrieveById(Integer id){
         Optional<Marca> marca = marcaRepository.findById(id);
-        if(marca.isPresent()){
+        if(!marca.isPresent()){
             throw new ResourceNotFoundException();
         }
         return mapToDTO(marca.get());
@@ -63,7 +64,7 @@ public class MarcaService {
     public void replace(Integer marcaId, MarcaDTO marcaDto) {
         Optional<Marca> marca = marcaRepository.findById(marcaId);
 
-        if (marca.isPresent()) {
+        if (!marca.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
@@ -78,7 +79,7 @@ public class MarcaService {
     public void modify(Integer marcaId, Map<Integer, Object> fieldsToModify) {
         Optional<Marca> marca = marcaRepository.findById(marcaId);
 
-        if (marca.isPresent()) {
+        if (!marca.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
@@ -90,7 +91,7 @@ public class MarcaService {
     }
 
     //----------------------------------------------------------------------------------------------------------------
-    private void CheckForExistingMarca(Integer id) {
+    private void checkForExistingMarca(Integer id) {
         if (marcaRepository.existsById(id)) {
             throw new ExistingResourceException();
         }

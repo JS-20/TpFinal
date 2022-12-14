@@ -9,6 +9,7 @@ import java.util.List;
 public class Marca {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
     private String nombre;

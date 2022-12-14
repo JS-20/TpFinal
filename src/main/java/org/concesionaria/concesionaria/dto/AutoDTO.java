@@ -14,6 +14,8 @@ public class AutoDTO {
     private String color;
     private Double precio;
 
+    private Boolean vendido;
+
 
 
     public AutoDTO(String numeroChasis, String modelo,
@@ -44,6 +46,14 @@ public class AutoDTO {
 
     public String getColor(){
         return color;
+    }
+
+    public Boolean getVendido() {
+        return vendido;
+    }
+
+    public void setVendido(Boolean vendido) {
+        this.vendido = vendido;
     }
 
     public Double getPrecio() {return precio;}

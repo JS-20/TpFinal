@@ -4,6 +4,7 @@ import org.concesionaria.concesionaria.dto.ClienteDTO;
 import org.concesionaria.concesionaria.dto.VendedorDTO;
 
 import org.concesionaria.concesionaria.entity.Cliente;
+import org.concesionaria.concesionaria.entity.Contrato;
 import org.concesionaria.concesionaria.entity.Vendedor;
 import org.concesionaria.concesionaria.exceptions.ExistingResourceException;
 import org.concesionaria.concesionaria.exceptions.ResourceNotFoundException;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @Service
 public class VendedorService {
     private final VendedorRepository vendedorRepository;
+    private final String MENSAJE= "EL vendedor no existe";
 
     public VendedorService(VendedorRepository vendedorRepository) {
         this.vendedorRepository = vendedorRepository;
@@ -43,10 +45,9 @@ public class VendedorService {
 
     /*Método para mostrar un vendedor segun el cuil*/
     public VendedorDTO retrieveById(String vendedorId) {
-
         Optional<Vendedor> vendedor = vendedorRepository.findById(vendedorId);
-        if (vendedor.isPresent()) {
-            throw new ResourceNotFoundException();
+        if (!vendedor.isPresent()) {
+            throw new ResourceNotFoundException(MENSAJE);
         }
         return mapToDTO(vendedor.get());
 
@@ -57,18 +58,17 @@ public class VendedorService {
         try {
             vendedorRepository.deleteById(vendedorId);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException(MENSAJE);
         }
     }
 
     /*reemplazar todos los campos de un registro de vendedor*/
     public void replace(String vendedorId, VendedorDTO vendedorDto) {
         Optional<Vendedor> vendedor = vendedorRepository.findById(vendedorId);
-        if (vendedor.isPresent()) {
+        if (!vendedor.isPresent()) {
             throw new ResourceNotFoundException();
         }
         Vendedor vendedorToReplace = vendedor.get();
-        vendedorToReplace.setCuil(vendedorDto.getCuil());
         vendedorToReplace.setNombre(vendedorDto.getNombre());
         vendedorToReplace.setApellido(vendedorDto.getApellido());
         vendedorToReplace.setNumeroIdentidad(vendedorDto.getNumeroIdentidad());
@@ -81,8 +81,8 @@ public class VendedorService {
     /*modificar un  o varios campos de un vendedor*/
     public void modify(String vendedorId, Map<String, Object> fieldsToModify) {
         Optional<Vendedor> vendedor = vendedorRepository.findById(vendedorId);
-        if (vendedor.isPresent()) {
-            throw new ResourceNotFoundException();
+        if (!vendedor.isPresent()) {
+            throw new ResourceNotFoundException(MENSAJE);
         }
         Vendedor vendedorToModify = vendedor.get();
 
@@ -94,7 +94,7 @@ public class VendedorService {
 
     private void checkForExistingVendedor(String vendedorId) {
         if (vendedorRepository.existsById(vendedorId)) {
-            throw new ExistingResourceException();
+            throw new ExistingResourceException(MENSAJE);
         }
     }
 

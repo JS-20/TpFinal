@@ -22,7 +22,7 @@ public class AutoController {
     @PostMapping
     public ResponseEntity create(@RequestBody AutoDTO autoDto) {
         AutoDTO nuevoAutoDto = autoService.create(autoDto);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(autoDto,HttpStatus.CREATED);
     }
 
 

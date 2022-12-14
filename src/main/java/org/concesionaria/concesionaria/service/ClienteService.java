@@ -42,7 +42,7 @@ public class ClienteService {
     /*Método para bucar un cliente desde la base de datos con el id del cliente*/
     public ClienteDTO retrieveById(Integer clienteId) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
-        if (cliente.isPresent()) {
+        if (!cliente.isPresent()) {
             throw new ResourceNotFoundException();
         }
         return mapToDTO(cliente.get());
@@ -62,7 +62,7 @@ public class ClienteService {
     public void replace(Integer clienteId, ClienteDTO clienteDto) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
 
-        if (cliente.isPresent()) {
+        if (!cliente.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
@@ -80,16 +80,16 @@ public class ClienteService {
     }
 
     /*modifica algun o varios registros de un cliente*/
-    public void modify(Integer clienteId, Map<Integer, Object> fieldsToModify) {
+    public void modify(Integer clienteId, Map<String, Object> fieldsToModify) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
 
-        if (cliente.isPresent()) {
+        if (!cliente.isPresent()) {
             throw new ResourceNotFoundException();
         }
 
         Cliente clienteToModify = cliente.get();
 
-        fieldsToModify.forEach((key, value) -> clienteToModify.modifyAttributeValue(String.valueOf(key), value));/*duda!!!*/
+        fieldsToModify.forEach((key, value) -> clienteToModify.modifyAttributeValue(key, value));/*duda!!!*/
         clienteRepository.save(clienteToModify);
 
     }
@@ -114,6 +114,7 @@ public class ClienteService {
     private ClienteDTO mapToDTO(Cliente cliente) {
         ClienteDTO clienteDTO = new ClienteDTO(cliente.getNombre(), cliente.getApellido(),
                 cliente.getNumeroIdentidad(), cliente.getTipoIdentidad(), cliente.getTelefono(), cliente.getEmail());
+        clienteDTO.setId(cliente.getId());
         return clienteDTO;
     }
 

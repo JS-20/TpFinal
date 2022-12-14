@@ -52,7 +52,7 @@ public class VendedorController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PutMapping("/vendedor/{vendedorId}")
+    @PatchMapping("/{vendedorId}")
     public ResponseEntity modify(@PathVariable String vendedorId,
                                  @RequestBody Map<String,Object> fieldsToModify){
         vendedorService.modify(vendedorId,fieldsToModify);

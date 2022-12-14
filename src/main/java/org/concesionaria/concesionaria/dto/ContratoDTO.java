@@ -4,15 +4,19 @@ package org.concesionaria.concesionaria.dto;
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 public class ContratoDTO {
+
     private Integer id;
+
     @JsonAlias("cliente_id")
     private Integer cliente;
+
     @JsonAlias("vendedor_id")
     private String vendedor;
+
     @JsonAlias("auto_id")
     private String auto;
 
-    @JsonAlias("metodo_pago")
+    @JsonAlias("metodo_pago_id")
     private Integer metodoPago;
 
     private String fecha;
@@ -24,14 +28,15 @@ public class ContratoDTO {
     public ContratoDTO() {
     }
 
-    public ContratoDTO(Integer cliente, String vendedor, String auto, Integer metodoPago, String fecha, Double cuotas, Double precio) {
+    public ContratoDTO(Integer cliente, String vendedor, String auto,
+                       Integer metodoPago, String fecha, Double cuotas) {
         this.cliente = cliente;
         this.vendedor = vendedor;
         this.auto = auto;
         this.metodoPago = metodoPago;
         this.fecha = fecha;
         this.cuotas = cuotas;
-        this.precio = precio;
+
     }
 
     public Integer getId() {

@@ -27,6 +27,8 @@ public class Auto {
 
     @OneToMany(mappedBy = "auto")
     private List<Contrato> contratos;
+    @Column(nullable = false)
+    private Boolean vendido;
 
     public Auto (){
     }
@@ -100,6 +102,15 @@ public class Auto {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+
+    public Boolean getVendido() {
+        return vendido;
+    }
+
+    public void setVendido(Boolean vendido) {
+        this.vendido = vendido;
     }
 
     public void setPrecio(Double precio) {

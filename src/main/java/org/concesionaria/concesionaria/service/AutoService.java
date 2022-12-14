@@ -24,7 +24,9 @@ public class AutoService {
     public AutoDTO create(AutoDTO autoDto) {
         Auto auto = mapToEntity(autoDto);
         checkForExistingAuto(auto.getNumeroChasis());
+        auto.setVendido(false);
         auto = autoRepository.save(auto);
+        autoDto.setVendido(auto.getVendido());
         return autoDto;
     }
 
@@ -38,9 +40,9 @@ public class AutoService {
 
 
     //get by id/
-    public AutoDTO retrieveById(String autoId) throws ResourceNotFoundException {
+    public AutoDTO retrieveById(String autoId) {
         Optional<Auto> auto = autoRepository.findById(autoId);
-        if (auto.isPresent()) {
+        if (!auto.isPresent()) {
             throw new ResourceNotFoundException();
         }
         return mapToDto(auto.get());
@@ -52,7 +54,7 @@ public class AutoService {
         try {
             autoRepository.deleteById(autoId);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException();
+            throw new ResourceNotFoundException("El auto no existe");
         }
     }
 
@@ -60,11 +62,10 @@ public class AutoService {
     //reemplazar todos los datos de un auto/
     public void replace(String autoId, AutoDTO autoDto) {
         Optional<Auto> auto = autoRepository.findById(autoId);
-        if (auto.isPresent()) {
+        if (!auto.isPresent()) {
             throw new ResourceNotFoundException();
         }
         Auto autoToReplace = auto.get();
-        autoToReplace.setNumeroChasis(autoDto.getNumeroChasis());
         autoToReplace.setAnioModelo(autoDto.getAnioModelo());
         autoToReplace.setColor(autoDto.getColor());
         autoToReplace.setMarcaId(autoDto.getMarcaId());
@@ -77,7 +78,7 @@ public class AutoService {
     //modificar campos en un registro/
     public void modify(String autoId, Map<String, Object> fieldsToModify) {
         Optional<Auto> auto = autoRepository.findById(autoId);
-        if (auto.isPresent()) {
+        if (!auto.isPresent()) {
             throw new ResourceNotFoundException();
         }
         Auto autoToModify = auto.get();
@@ -96,6 +97,7 @@ public class AutoService {
         AutoDTO autoDTO = new AutoDTO(auto.getNumeroChasis(), auto.getModelo(), auto.getMarcaId(),
                 auto.getAnioModelo(), auto.getColor(), auto.getPrecio());
         autoDTO.setNumeroChasis(auto.getNumeroChasis());
+        autoDTO.setVendido(auto.getVendido());
         return autoDTO;
     }
 
